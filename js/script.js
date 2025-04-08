@@ -19,16 +19,16 @@ const opcoes = [
 ];
 
 const imagensPorEfeito = {
-  'Rosto Radiante': '/img/espelhoradiante.jpg',
-  'Olhar Estrelado': '/img/espelhowink.jpg',
-  'Sorriso Enigmático': '/img/espelhoenigma.jpg',
-  'Olhar Confuso': '/img/espelhoconfuso.jpg',
-  'Sorriso Tímido': '/img/espelhotimido.jpg',
-  'Olhar Distante': '/img/espelhomagico.png',
-  'Olho Flamejante': '/img/espelhomagico.png',
-  'Coração Pulsante': '/img/espelhomagico.png',
-  'Olhar Oco': '/img/espelhomagico.png',
-  'Espelho Quebrado': '/img/espelhomagico.png'
+  'Rosto Radiante': '../img/espelhoradiante.jpg',
+  'Olhar Estrelado': '../img/espelhowink.jpg',
+  'Sorriso Enigmático': '../img/espelhoenigma.jpg',
+  'Olhar Confuso': '../img/espelhoconfuso.jpg',
+  'Sorriso Tímido': '../img/espelhotimido.jpg',
+  'Olhar Distante': '../img/espelhomagico.png',
+  'Olho Flamejante': '../img/espelhomagico.png',
+  'Coração Pulsante': '../img/espelhomagico.png',
+  'Olhar Oco': '../img/espelhomagico.png',
+  'Espelho Quebrado': '../img/espelhomagico.png'
 };
 
 
@@ -90,7 +90,7 @@ function exibirResultado(resultado) {
     espelho.src = novaImagem;
 
     setTimeout(() => {
-      espelho.src = '/img/espelhomagico.png';
+      espelho.src = '../img/espelhomagico.png';
       espelho.style.transform = 'scale(1)';
     }, 5000);
   }
