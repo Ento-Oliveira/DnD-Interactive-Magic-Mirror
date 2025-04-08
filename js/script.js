@@ -5,8 +5,8 @@ const decreaseButton = document.getElementById('decreaseBonus');
 const increaseButton = document.getElementById('increaseBonus');
 const espelho = document.getElementById('espelho');
 const listaRegistro = document.getElementById('lista-registro');
-const toggleRegistroButton = document.getElementById('toggle-registro');
-const registroDiv = document.getElementById('registro');
+const toggleHistorico = document.getElementById('toggle-historico');
+const registroContainer = document.getElementById('registro');
 
 const opcoes = [
   { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'O reflexo sorri serenamente.', efeito: 'Você ganha +1 ponto permanente em um atributo à escolha.' },
@@ -94,7 +94,6 @@ function exibirResultado(resultado) {
 
     setTimeout(() => {
       espelho.src = './img/espelhomagico.png';
-      espelho.style.transform = 'scale(1)';
     }, 5000);
   }
 
@@ -131,5 +130,15 @@ increaseButton.addEventListener('click', () => {
   if (bonus < 5) {
     bonus += 1;
     bonusInput.value = bonus;
+  }
+});
+
+toggleHistorico.addEventListener('click', () => {
+  if (registroContainer.style.display === 'none' || registroContainer.style.display === '') {
+    registroContainer.style.display = 'block'; // Mostra o histórico
+    toggleHistorico.textContent = 'Ocultar Histórico'; // Altera o texto do botão
+  } else {
+    registroContainer.style.display = 'none'; // Oculta o histórico
+    toggleHistorico.textContent = 'Mostrar Histórico'; // Altera o texto do botão
   }
 });

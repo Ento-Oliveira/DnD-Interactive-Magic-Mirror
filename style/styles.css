@@ -135,7 +135,7 @@ button:active {
   transform: scale(0.9);
 }
 
-#toggle-registro {
+#toggle-historico {
   position: absolute;
   right: 20px; /* Espaçamento da direita */
   top: 10px; /* Espaçamento do topo */
@@ -149,7 +149,7 @@ button:active {
   transition: background 0.3s ease;
 }
 
-#toggle-registro:hover {
+#toggle-historico:hover {
   background: #555;
 }
 
