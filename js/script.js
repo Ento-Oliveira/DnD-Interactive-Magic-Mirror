@@ -4,9 +4,12 @@ const bonusInput = document.getElementById('bonusInput');
 const decreaseButton = document.getElementById('decreaseBonus');
 const increaseButton = document.getElementById('increaseBonus');
 const espelho = document.getElementById('espelho');
+const listaRegistro = document.getElementById('lista-registro');
+const toggleRegistroButton = document.getElementById('toggle-registro');
+const registroDiv = document.getElementById('registro');
 
 const opcoes = [
-  { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'O reflexo sorri serenamente. Você ganha +1 ponto permanente em um atributo à escolha.' },
+  { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'O reflexo sorri serenamente.', efeito: 'Você ganha +1 ponto permanente em um atributo à escolha.' },
   { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Pequenas estrelas dançam nos olhos do reflexo. Você recebe uma bênção temporária.' },
   { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'O reflexo sorri misteriosamente. Uma pista crucial sobre o vilão é revelada.' },
   { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'O reflexo franze a testa. Uma mensagem críptica aparece no espelho.' },
@@ -90,10 +93,14 @@ function exibirResultado(resultado) {
     espelho.src = novaImagem;
 
     setTimeout(() => {
-      espelho.src = '/img/espelhomagico.png';
+      espelho.src = './img/espelhomagico.png';
       espelho.style.transform = 'scale(1)';
     }, 5000);
   }
+
+  const novoItem = document.createElement('li');
+  novoItem.textContent = resultado.efeito;
+  listaRegistro.prepend(novoItem);
 }
 
 function limparBalao() {
