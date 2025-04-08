@@ -23,7 +23,7 @@ const imagensPorEfeito = {
   'Olhar Estrelado': '/img/espelhowink.jpg',
   'Sorriso Enigmático': '/img/espelhoenigma.jpg',
   'Olhar Confuso': '/img/espelhoconfuso.jpg',
-  'Sorriso Tímido': '/img/espelhomagico.png',
+  'Sorriso Tímido': '/img/espelhotimido.jpg',
   'Olhar Distante': '/img/espelhomagico.png',
   'Olho Flamejante': '/img/espelhomagico.png',
   'Coração Pulsante': '/img/espelhomagico.png',
