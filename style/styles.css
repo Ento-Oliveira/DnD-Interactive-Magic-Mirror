@@ -135,17 +135,23 @@ button:active {
   transform: scale(0.9);
 }
 
-#toggle-historico {
+#spoiler-container {
   position: absolute;
-  right: 20px; /* Espaçamento da direita */
-  top: 10px; /* Espaçamento do topo */
-  padding: 10px 15px;
+  right: 20px;
+  top: 60px;
+  width: 300px;
+}
+
+#toggle-historico {
+  width: 100%;
+  padding: 10px;
   background: #333;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
+  text-align: left;
   transition: background 0.3s ease;
 }
 
@@ -153,26 +159,19 @@ button:active {
   background: #555;
 }
 
-#registro-container {
-  position: absolute;
-  right: 20px; /* Espaçamento da direita */
-  top: 60px; /* Espaçamento do topo */
-  width: 300px; /* Largura fixa */
-}
-
 #registro {
-  display: none; /* Inicialmente oculto */
-  padding: 15px;
+  display: none;
+  padding: 10px;
   background: #222;
   color: white;
-  border-radius: 10px;
+  border-radius: 0 0 5px 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   text-align: left;
 }
 
 #registro h3 {
   margin: 0 0 10px;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -180,8 +179,8 @@ button:active {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  max-height: 300px; /* Altura máxima */
-  overflow-y: auto; /* Barra de rolagem se necessário */
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 #lista-registro li {

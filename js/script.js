@@ -6,7 +6,7 @@ const increaseButton = document.getElementById('increaseBonus');
 const espelho = document.getElementById('espelho');
 const listaRegistro = document.getElementById('lista-registro');
 const toggleHistorico = document.getElementById('toggle-historico');
-const registroContainer = document.getElementById('registro');
+const registro = document.getElementById('registro');
 
 const opcoes = [
   { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'O reflexo sorri serenamente.', efeito: 'Você ganha +1 ponto permanente em um atributo à escolha.' },
@@ -28,7 +28,7 @@ const imagensPorEfeito = {
   'Olhar Confuso': './img/espelhoconfuso.jpg',
   'Sorriso Tímido': './img/espelhotimido.jpg',
   'Olhar Distante': './img/espelhodistante.jpg',
-  'Olho Flamejante': './img/espelhomagico.png',
+  'Olho Flamejante': './img/espelhohipnose.jpg',
   'Coração Pulsante': './img/espelhomagico.png',
   'Olhar Oco': './img/espelhomagico.png',
   'Espelho Quebrado': './img/espelhomagico.png'
@@ -134,11 +134,11 @@ increaseButton.addEventListener('click', () => {
 });
 
 toggleHistorico.addEventListener('click', () => {
-  if (registroContainer.style.display === 'none' || registroContainer.style.display === '') {
-    registroContainer.style.display = 'block'; // Mostra o histórico
-    toggleHistorico.textContent = 'Ocultar Histórico'; // Altera o texto do botão
+  if (registro.style.display === 'none' || registro.style.display === '') {
+    registro.style.display = 'block';
+    toggleHistorico.textContent = 'Ocultar Histórico';
   } else {
-    registroContainer.style.display = 'none'; // Oculta o histórico
-    toggleHistorico.textContent = 'Mostrar Histórico'; // Altera o texto do botão
+    registro.style.display = 'none';
+    toggleHistorico.textContent = 'Mostrar Histórico';
   }
 });
