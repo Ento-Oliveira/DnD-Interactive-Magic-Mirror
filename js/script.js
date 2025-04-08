@@ -10,15 +10,15 @@ const registro = document.getElementById('registro');
 
 const opcoes = [
   { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'O reflexo sorri serenamente.', efeito: 'Você ganha +1 ponto permanente em um atributo à escolha.' },
-  { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Pequenas estrelas dançam nos olhos do reflexo. Você recebe uma bênção temporária.' },
-  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'O reflexo sorri misteriosamente. Uma pista crucial sobre o vilão é revelada.' },
-  { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'O reflexo franze a testa. Uma mensagem críptica aparece no espelho.' },
-  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O reflexo sorri timidamente. Uma porta secreta ou baú trancado é revelado.' },
-  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'Os olhos do reflexo parecem distantes. Você fica preso em uma ilusão por alguns turnos.' },
-  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Um olho do reflexo se inflama. Você é hipnotizado pelo espelho.' },
-  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Um coração brilhante pulsa no peito do reflexo. O espelho drena sua energia vital.' },
-  { nome: 'Olhar Oco', tipo: 'ruim', mensagem: 'Os olhos do reflexo ficam negros. Todos os jogadores ficam cegos por alguns turnos.' },
-  { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'O espelho se parte violentamente, liberando um ser maligno aprisionado.' }
+  { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Pequenas estrelas dançam nos olhos do reflexo.', efeito: 'Você recebe uma bênção temporária.' },
+  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'O reflexo sorri misteriosamente.', efeito: 'Uma pista crucial sobre o vilão é revelada.' },
+  { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'O reflexo franze a testa.', efeito: 'Uma mensagem críptica aparece no espelho.' },
+  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O reflexo sorri timidamente.', efeito: 'Uma porta secreta ou baú trancado é revelado.' },
+  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'Os olhos do reflexo parecem distantes.', efeito: 'Você fica preso em uma ilusão por alguns turnos.' },
+  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Um olho do reflexo se inflama.', efeito: 'Você é hipnotizado pelo espelho.' },
+  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Um coração brilhante pulsa no peito do reflexo.', efeito: 'O espelho drena sua energia vital.' },
+  { nome: 'Olhar Oco', tipo: 'ruim', mensagem: 'Os olhos do reflexo ficam negros.', efeito: 'Todos os jogadores ficam cegos por alguns turnos.' },
+  { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'O espelho se parte violentamente.', efeito: 'Libera o ser maligno aprisionado.' }
 ];
 
 const imagensPorEfeito = {
@@ -29,7 +29,7 @@ const imagensPorEfeito = {
   'Sorriso Tímido': './img/espelhotimido.jpg',
   'Olhar Distante': './img/espelhodistante.jpg',
   'Olho Flamejante': './img/espelhohipnose.jpg',
-  'Coração Pulsante': './img/espelhomagico.png',
+  'Coração Pulsante': './img/espelhovitae.jpg',
   'Olhar Oco': './img/espelhomagico.png',
   'Espelho Quebrado': './img/espelhomagico.png'
 };
