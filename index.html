@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Mirror</title>
+  <link rel="stylesheet" href="style/styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="espelho-container">
+            <img src="/img/espelhomagico.png" alt="Magic Mirror" id="espelho">
+            <div id="area-clicavel"></div>
+        </div>
+        <div id="balao-de-fala"></div>
+        
+        <div id="controles">
+            <label for="bonusInput">Bônus/Penalidade:</label>
+            <div class="input-group">
+              <button id="increaseBonus">+</button>
+              <input type="number" id="bonusInput" min="-5" max="5" value="0" readonly>
+              <button id="decreaseBonus">-</button>
+            </div>
+        </div>
+    </div>
+  
+    <div id="mensagem"></div>
+    <audio id="som"></audio>
+  
+  <script src="js/script.js"></script>
+</body>
+</html>
