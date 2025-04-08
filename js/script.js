@@ -30,7 +30,7 @@ const imagensPorEfeito = {
   'Olhar Distante': './img/espelhodistante.jpg',
   'Olho Flamejante': './img/espelhohipnose.jpg',
   'Coração Pulsante': './img/espelhovitae.jpg',
-  'Olhar Oco': './img/espelhomagico.png',
+  'Olhar Oco': './img/espelhovazio.jpg',
   'Espelho Quebrado': './img/espelhomagico.png'
 };
 
