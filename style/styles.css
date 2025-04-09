@@ -204,16 +204,16 @@ button:active {
   }
 
   #controles {
-    position: static; /* Remove o posicionamento absoluto */
-    margin-top: 20px; /* Adiciona margem acima do texto */
-    text-align: center; /* Centraliza o texto */
+    position: static;
+    margin-top: 20px;
+    text-align: center;
   }
 
   #texto-direita {
-    position: static; /* Remove o posicionamento absoluto */
-    margin-top: 20px; /* Adiciona margem acima do texto */
-    text-align: center; /* Centraliza o texto */
-    width: 100%; /* Ocupa toda a largura */
+    position: static;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
   }
 
   #spoiler-container {
