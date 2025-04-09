@@ -94,7 +94,7 @@ function exibirResultado(resultado) {
 
     setTimeout(() => {
       espelho.src = './img/espelhomagico.png';
-    }, 5000);
+    }, 8000);
   }
 
   const novoItem = document.createElement('li');
@@ -105,7 +105,7 @@ function exibirResultado(resultado) {
 function limparBalao() {
   setTimeout(() => {
     balaoDeFala.classList.remove('visible');
-  }, 5000);
+  }, 8000);
 }
 
 areaClicavel.addEventListener('click', () => {
