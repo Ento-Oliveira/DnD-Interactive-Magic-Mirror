@@ -13,11 +13,11 @@ const opcoes = [
   { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Tu és parte do grande tecido do cosmos. Sente sua força correr em tuas veias.', efeito: 'Concede ao jogador uma bênção (ex.: vantagem em testes, resistência a um tipo de dano, um ataque adicional por rodada) até o próximo descanso longo.' },
   { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'Um lampejo do futuro... ou talvez do passado. Decifra seu significado.', efeito: 'Concede ao jogador uma informação importante sobre o vilão, um segredo oculto ou o próximo passo da aventura.' },
   { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'Não compreendo... mas talvez tu consigas. Escuta estas palavras.', efeito: 'Concede um enigma ou mensagem críptica que pode desencadear uma side quest ou avançar a trama principal.' },
-  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O reflexo sorri timidamente.', efeito: 'Uma porta secreta ou baú trancado é revelado.' },
-  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'Os olhos do reflexo parecem distantes.', efeito: 'Você fica preso em uma ilusão por alguns turnos.' },
-  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Um olho do reflexo se inflama.', efeito: 'Você é hipnotizado pelo espelho.' },
-  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Um coração brilhante pulsa no peito do reflexo.', efeito: 'O espelho drena sua energia vital.' },
-  { nome: 'Olhar Oco', tipo: 'ruim', mensagem: 'Os olhos do reflexo ficam negros.', efeito: 'Todos os jogadores ficam cegos por alguns turnos.' },
+  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O que está escondido espera por ti... mas o preço pode ser mais alto do que imaginas.', efeito: 'Ele abre uma passagem para o mundo do espelho, onde os jogadores podem buscar um tesouro ou segredo valioso. No entanto, cada vez que o poder é usado, a prisão do ser aprisionado é enfraquecida, aproximando-o de sua liberdade.' },
+  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'O que vês pode ser verdade... ou apenas sombras do que poderia ser.', efeito: 'Prende o jogador em uma ilusão dentro do espelho por 1d4 rodadas, mostrando eventos distorcidos do passado ou futuro. Ao sair, o jogador pode ganhar uma pista importante ou sofrer efeitos psicológicos temporários.' },
+  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Teu destino arde em chamas... e eu sou a centelha.', efeito: 'O jogador deve fazer um teste de resistência (Sabedoria, CD 15) ou será hipnotizado/controlado por 1d4 rodadas, agindo de forma prejudicial ao grupo ou seguindo ordens do ser aprisionado.' },
+  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Tua energia alimenta minha prisão... mas também me fortalece.', efeito: 'O jogador deve fazer um teste de resistência (Constituição, CD 15). Se passar, sofre 1d6 de dano necrótico. Se falhar, sofre 1d6 de dano necrótico e tem 1 ponto de um atributo reduzido até o próximo descanso longo.' },
+  { nome: 'Olhar Vazio', tipo: 'ruim', mensagem: 'Os olhos do reflexo ficam negros.', efeito: 'Todos os jogadores ficam cegos por alguns turnos.' },
   { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'O espelho se parte violentamente.', efeito: 'Libera o ser maligno aprisionado.' }
 ];
 
@@ -30,7 +30,7 @@ const imagensPorEfeito = {
   'Olhar Distante': './img/espelhodistante.jpg',
   'Olho Flamejante': './img/espelhohipnose.jpg',
   'Coração Pulsante': './img/espelhovitae.jpg',
-  'Olhar Oco': './img/espelhovazio.jpg',
+  'Olhar Vazio': './img/espelhovazio.jpg',
   'Espelho Quebrado': './img/espelhoquebrado.jpg'
 };
 
