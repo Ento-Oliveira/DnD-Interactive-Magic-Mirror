@@ -9,10 +9,10 @@ const toggleHistorico = document.getElementById('toggle-historico');
 const registro = document.getElementById('registro');
 
 const opcoes = [
-  { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'O reflexo sorri serenamente.', efeito: 'Você ganha +1 ponto permanente em um atributo à escolha.' },
-  { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Pequenas estrelas dançam nos olhos do reflexo.', efeito: 'Você recebe uma bênção temporária.' },
-  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'O reflexo sorri misteriosamente.', efeito: 'Uma pista crucial sobre o vilão é revelada.' },
-  { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'O reflexo franze a testa.', efeito: 'Uma mensagem críptica aparece no espelho.' },
+  { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'Olha para mim e vê quem tu és verdadeiramente. Agora, carrega essa verdade contigo.', efeito: 'Concede ao jogador +1 ponto permanente em um atributo à escolha.' },
+  { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Tu és parte do grande tecido do cosmos. Sente sua força correr em tuas veias.', efeito: 'Concede ao jogador uma bênção (ex.: vantagem em testes, resistência a um tipo de dano, um ataque adicional por rodada) até o próximo descanso longo.' },
+  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'Um lampejo do futuro... ou talvez do passado. Decifra seu significado.', efeito: 'Concede ao jogador uma informação importante sobre o vilão, um segredo oculto ou o próximo passo da aventura.' },
+  { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'Não compreendo... mas talvez tu consigas. Escuta estas palavras.', efeito: 'Concede um enigma ou mensagem críptica que pode desencadear uma side quest ou avançar a trama principal.' },
   { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O reflexo sorri timidamente.', efeito: 'Uma porta secreta ou baú trancado é revelado.' },
   { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'Os olhos do reflexo parecem distantes.', efeito: 'Você fica preso em uma ilusão por alguns turnos.' },
   { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Um olho do reflexo se inflama.', efeito: 'Você é hipnotizado pelo espelho.' },
