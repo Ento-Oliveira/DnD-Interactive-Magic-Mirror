@@ -34,6 +34,35 @@ const imagensPorEfeito = {
   'Espelho Quebrado': './img/espelhoquebrado.jpg'
 };
 
+const listaDeSons = {
+  'Rosto Radiante': './audio/rosto_radiante.mp3',
+  'Olhar Estrelado': './audio/olhar_estrelado.mp3',
+  'Sorriso Enigmático': './audio/sorriso_enigmatico.mp3',
+  'Olhar Confuso': './audio/olhar_confuso.mp3',
+  'Sorriso Tímido': './audio/sorriso_timido.mp3',
+  'Olhar Distante': './audio/olhar_distante.mp3',
+  'Olho Flamejante': './audio/olho_flamejante.mp3',
+  'Coração Pulsante': './audio/coracao_pulsante.mp3',
+  'Olhar Vazio': './audio/olhar_vazio.mp3',
+  'Espelho Quebrado': './sons/broken.mp3'
+};
+
+const sons = {};
+
+for (const nomeDoEfeito in listaDeSons) {
+  sons[nomeDoEfeito] = new Audio(listaDeSons[nomeDoEfeito]);
+  sons[nomeDoEfeito].preload = 'auto';
+}
+
+function tocarSom(nomeDoEfeito) {
+  if (sons[nomeDoEfeito]) {
+    sons[nomeDoEfeito].play().catch((error) => {
+      console.error("Erro ao reproduzir o som:", error);
+    });
+  } else {
+    console.error("Som não encontrado para o efeito:", nomeDoEfeito);
+  }
+}
 
 function calcularProbabilidades(bonus) {
   let excelente = 1;
@@ -91,6 +120,8 @@ function exibirResultado(resultado) {
   const novaImagem = imagensPorEfeito[resultado.nome];
   if (novaImagem) {
     espelho.src = novaImagem;
+
+    tocarSom(resultado.nome);
 
     setTimeout(() => {
       espelho.src = './img/espelhomagico.png';
