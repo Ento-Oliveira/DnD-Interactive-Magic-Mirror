@@ -35,7 +35,7 @@ const imagensPorEfeito = {
 };
 
 const listaDeSons = {
-  'Rosto Radiante': './audio/rosto_radiante.mp3',
+  'Rosto Radiante': './sons/radiant.mp3',
   'Olhar Estrelado': './audio/olhar_estrelado.mp3',
   'Sorriso Enigmático': './audio/sorriso_enigmatico.mp3',
   'Olhar Confuso': './audio/olhar_confuso.mp3',
