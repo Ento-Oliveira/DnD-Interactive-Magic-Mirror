@@ -222,3 +222,22 @@ button:active {
     width: 100%;
   }
 }
+
+#icone-trava {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background-image: url('./img/trava.png'); /* Substitua pelo caminho do ícone */
+  background-size: cover;
+  cursor: pointer;
+  opacity: 0.3; /* Deixa o ícone discreto */
+  transition: opacity 0.3s ease; /* Animação suave */
+  border: 2px solid red;
+}
+
+/* Efeito ao passar o mouse */
+#icone-trava:hover {
+  opacity: 1; /* Torna o ícone visível */
+}
