@@ -148,7 +148,6 @@ function limparBalao() {
 
 areaClicavel.addEventListener('click', () => {
   if (espelhoQuebrado) {
-    alert("O espelho está quebrado e não pode ser usado novamente.");
     return;
   }
 
