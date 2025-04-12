@@ -1,3 +1,5 @@
+let espelhoQuebrado = false;
+
 const areaClicavel = document.getElementById('area-clicavel');
 const balaoDeFala = document.getElementById('balao-de-fala');
 const bonusInput = document.getElementById('bonusInput');
@@ -121,11 +123,16 @@ function exibirResultado(resultado) {
   if (novaImagem) {
     espelho.src = novaImagem;
 
-    tocarSom(resultado.nome);
-
-    setTimeout(() => {
-      espelho.src = './img/espelhomagico.png';
-    }, 8000);
+    if (resultado.nome === 'Espelho Quebrado') {
+      espelhoQuebrado = true;
+      tocarSom(resultado.nome);
+    } else {
+      setTimeout(() => {
+        if (!espelhoQuebrado) {
+          espelho.src = './img/espelhomagico.png';
+        }
+      }, 8000);
+    }
   }
 
   const novoItem = document.createElement('li');
@@ -140,6 +147,11 @@ function limparBalao() {
 }
 
 areaClicavel.addEventListener('click', () => {
+  if (espelhoQuebrado) {
+    alert("O espelho está quebrado e não pode ser usado novamente.");
+    return;
+  }
+
   const bonus = parseInt(bonusInput.value);
   const resultado = gerarResultado(bonus);
 
