@@ -1,101 +1,121 @@
-// Variável para rastrear se o espelho está quebrado
-let espelhoQuebrado = false;
+// Constantes
+const TEMPO_EXIBICAO = 8000;
+const CAMINHO_BASE = './'; // Ajuste se necessário (ex.: '/recursos/')
+const LIMITE_REGISTROS = 50;
 
-// Variável para rastrear se o histórico está travado
+// Estado do jogo
+let espelhoQuebrado = false;
 let travaHistorico = true;
 
-// Seleciona elementos
-const areaClicavel = document.getElementById('area-clicavel');
-const balaoDeFala = document.getElementById('balao-de-fala');
-const bonusInput = document.getElementById('bonusInput');
-const decreaseButton = document.getElementById('decreaseBonus');
-const increaseButton = document.getElementById('increaseBonus');
-const espelho = document.getElementById('espelho');
-const listaRegistro = document.getElementById('lista-registro');
-const toggleHistorico = document.getElementById('toggle-historico');
-const registro = document.getElementById('registro');
+// Elementos DOM (com validação)
+const elementos = {
+  areaClicavel: 'area-clicavel',
+  balaoDeFala: 'balao-de-fala',
+  bonusInput: 'bonusInput',
+  decreaseButton: 'decreaseBonus',
+  increaseButton: 'increaseBonus',
+  espelho: 'espelho',
+  listaRegistro: 'lista-registro',
+  toggleHistorico: 'toggle-historico',
+  registro: 'registro',
+  iconeTrava: 'icone-trava'
+};
 
-// Ícone de trava
-const iconeTrava = document.getElementById('icone-trava');
-
-// Função para alternar o estado da trava
-function alternarTrava() {
-  travaHistorico = !travaHistorico; // Alterna entre true e false
-  if (travaHistorico) {
-    console.log("Histórico travado!");
-    iconeTrava.title = "Clique aqui para desbloquear o histórico (DM Only)";
-  } else {
-    console.log("Histórico desbloqueado!");
-    iconeTrava.title = "Clique aqui para bloquear o histórico novamente";
+const dom = {};
+function inicializarElementos() {
+  for (const [nome, id] of Object.entries(elementos)) {
+    dom[nome] = document.getElementById(id);
+    if (!dom[nome]) {
+      console.error(`Elemento '${id}' não encontrado!`);
+      return false;
+    }
   }
+  // Configurações iniciais
+  dom.registro.style.display = 'none';
+  dom.toggleHistorico.textContent = 'Mostrar Histórico';
+  dom.balaoDeFala.setAttribute('role', 'alert');
+  dom.areaClicavel.setAttribute('tabindex', '0');
+  return true;
 }
 
-// Evento de clique no ícone de trava
-iconeTrava.addEventListener('click', () => {
-  alternarTrava(); // Alterna o estado da trava
-});
+if (!inicializarElementos()) {
+  console.error("Falha ao inicializar. Script interrompido.");
+  throw new Error("Inicialização falhou");
+}
 
 // Lista de opções do espelho
 const opcoes = [
   { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'Olha para mim e vê quem tu és verdadeiramente. Agora, carrega essa verdade contigo.', efeito: 'Concede ao jogador +1 ponto permanente em um atributo à escolha.' },
   { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Tu és parte do grande tecido do cosmos. Sente sua força correr em tuas veias.', efeito: 'Concede ao jogador uma bênção (ex.: vantagem em testes, resistência a um tipo de dano, um ataque adicional por rodada) até o próximo descanso longo.' },
-  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'Um lampejo do futuro... ou talvez do passado. Decifra seu significado.', efeito: 'Concede ao jogador uma informação importante sobre o vilão, um segredo oculto ou o próximo passo da aventura.' },
-  { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'Não compreendo... mas talvez tu consigas. Escuta estas palavras.', efeito: 'Concede um enigma ou mensagem críptica que pode desencadear uma side quest ou avançar a trama principal.' },
-  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O que está escondido espera por ti... mas o preço pode ser mais alto do que imaginas.', efeito: 'Ele abre uma passagem para o mundo do espelho, onde os jogadores podem buscar um tesouro ou segredo valioso. No entanto, cada vez que o poder é usado, a prisão do ser aprisionado é enfraquecida, aproximando-o de sua liberdade.' },
-  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'O que vês pode ser verdade... ou apenas sombras do que poderia ser.', efeito: 'Prende o jogador em uma ilusão dentro do espelho por 1d4 rodadas, mostrando eventos distorcidos do passado ou futuro. Ao sair, o jogador pode ganhar uma pista importante ou sofrer efeitos psicológicos temporários.' },
-  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Teu destino arde em chamas... e eu sou a centelha.', efeito: 'O jogador deve fazer um teste de resistência (Sabedoria, CD 15) ou será hipnotizado/controlado por 1d4 rodadas, agindo de forma prejudicial ao grupo ou seguindo ordens do ser aprisionado.' },
-  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Tua energia alimenta minha prisão... mas também me fortalece.', efeito: 'O jogador deve fazer um teste de resistência (Constituição, CD 15). Se passar, sofre 1d6 de dano necrótico. Se falhar, sofre 1d6 de dano necrótico e tem 1 ponto de um atributo reduzido até o próximo descanso longo.' },
-  { nome: 'Olhar Vazio', tipo: 'ruim', mensagem: 'No vazio, tu és nada... e eu sou tudo.', efeito: 'Todos os jogadores próximos devem fazer um teste de resistência (Sabedoria, CD 15). Se falharem, sofrem uma maldição que impõe desvantagem em todos os ataques e testes de habilidade até o próximo descanso longo.' },
-  { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'Olhem para mim agora... e vejam o que libertaram.', efeito: 'Libera o ser maligno aprisionado. Ele se liga à sombra de um jogador (geralmente, quem o libertou) e começa a perturbar todos os jogadores com eventos assustadores, até see descoberto como uma entidade ligada à sombra do jogador. Após ser descoberto, ele começa a sussurrar diretamente no ouvido do portador, manipulando sua mente e causando caos. Até ser removido ou se fortalecer para assumir uma forma física e confrontar os jogadores.' }
+  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'Um lampejo do futuro... ou talvez do passado. Decifra seu significado.', efeito: 'Concede uma informação importante sobre o vilão, um segredo oculto ou aventura.' },
+  { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'Não compreendo... mas talvez tu consigas. Escuta estas palavras.', efeito: 'Concede um enigma ou mensagem críptica que pode desencadear uma side quest ou avançar trama.' },
+  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O que está escondido espera por ti... mas o preço pode ser alto.', efeito: 'Abre uma passagem para o mundo do espelho, onde os jogadores podem buscar um tesouro ou segredo valioso. No entanto, cada vez que o poder é usado, a prisão do ser aprisionado é enfraquecida, aproximando-o de sua liberdade (-1 de Penalidade).' },
+  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'O que vês pode ser verdade... ou apenas sombras.', efeito: 'Prende o jogador em uma ilusão com pista ou efeitos.' },
+  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Teu destino arde em chamas... e eu sou a centelha.', efeito: 'Teste de Sabedoria (CD 15) ou hipnose por 1d4 rodadas.' },
+  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Tua energia alimenta minha prisão...', efeito: 'Teste de Constituição (CD 15) ou dano e penalidade.' },
+  { nome: 'Olhar Vazio', tipo: 'ruim', mensagem: 'No vazio, tu és nada... e eu sou tudo.', efeito: 'Teste de Sabedoria (CD 15) ou maldição até descanso.' },
+  { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'Olhem para mim agora... e vejam o que libertaram.', efeito: 'Libera o ser maligno, causando caos.' }
 ];
 
-// Mapeamento de imagens para cada efeito
+// Mapeamento de mídia
 const imagensPorEfeito = {
-  'Rosto Radiante': './img/espelhoradiante.jpg',
-  'Olhar Estrelado': './img/espelhowink.jpg',
-  'Sorriso Enigmático': './img/espelhoenigma.jpg',
-  'Olhar Confuso': './img/espelhoconfuso.jpg',
-  'Sorriso Tímido': './img/espelhotimido.jpg',
-  'Olhar Distante': './img/espelhodistante.jpg',
-  'Olho Flamejante': './img/espelhohipnose.jpg',
-  'Coração Pulsante': './img/espelhovitae.jpg',
-  'Olhar Vazio': './img/espelhovazio.jpg',
-  'Espelho Quebrado': './img/espelhoquebrado.jpg'
+  'Rosto Radiante': `${CAMINHO_BASE}img/espelhoradiante.jpg`,
+  'Olhar Estrelado': `${CAMINHO_BASE}img/espelhowink.jpg`,
+  'Sorriso Enigmático': `${CAMINHO_BASE}img/espelhoenigma.jpg`,
+  'Olhar Confuso': `${CAMINHO_BASE}img/espelhoconfuso.jpg`,
+  'Sorriso Tímido': `${CAMINHO_BASE}img/espelhotimido.jpg`,
+  'Olhar Distante': `${CAMINHO_BASE}img/espelhodistante.jpg`,
+  'Olho Flamejante': `${CAMINHO_BASE}img/espelhohipnose.jpg`,
+  'Coração Pulsante': `${CAMINHO_BASE}img/espelhovitae.jpg`,
+  'Olhar Vazio': `${CAMINHO_BASE}img/espelhovazio.jpg`,
+  'Espelho Quebrado': `${CAMINHO_BASE}img/espelhoquebrado.jpg`
 };
 
-// Mapeamento de sons para cada efeito
 const listaDeSons = {
-  'Rosto Radiante': './sons/radiant.mp3',
-  'Olhar Estrelado': './audio/olhar_estrelado.mp3',
-  'Sorriso Enigmático': './audio/sorriso_enigmatico.mp3',
-  'Olhar Confuso': './audio/olhar_confuso.mp3',
-  'Sorriso Tímido': './audio/sorriso_timido.mp3',
-  'Olhar Distante': './audio/olhar_distante.mp3',
-  'Olho Flamejante': './audio/olho_flamejante.mp3',
-  'Coração Pulsante': './audio/coracao_pulsante.mp3',
-  'Olhar Vazio': './audio/olhar_vazio.mp3',
-  'Espelho Quebrado': './sons/broken.mp3'
+  'Rosto Radiante': `${CAMINHO_BASE}sons/radiant.mp3`,
+  'Olhar Estrelado': `${CAMINHO_BASE}audio/olhar_estrelado.mp3`,
+  'Sorriso Enigmático': `${CAMINHO_BASE}audio/sorriso_enigmatico.mp3`,
+  'Olhar Confuso': `${CAMINHO_BASE}audio/olhar_confuso.mp3`,
+  'Sorriso Tímido': `${CAMINHO_BASE}audio/sorriso_timido.mp3`,
+  'Olhar Distante': `${CAMINHO_BASE}audio/olhar_distante.mp3`,
+  'Olho Flamejante': `${CAMINHO_BASE}audio/olho_flamejante.mp3`,
+  'Coração Pulsante': `${CAMINHO_BASE}audio/coracao_pulsante.mp3`,
+  'Olhar Vazio': `${CAMINHO_BASE}audio/olhar_vazio.mp3`,
+  'Espelho Quebrado': `${CAMINHO_BASE}sons/broken.mp3`
 };
 
-// Pré-carrega os sons
+// Pré-carrega sons
 const sons = {};
 for (const nomeDoEfeito in listaDeSons) {
   sons[nomeDoEfeito] = new Audio(listaDeSons[nomeDoEfeito]);
   sons[nomeDoEfeito].preload = 'auto';
 }
 
-// Função para reproduzir um som específico
+// Funções utilitárias
+function mostrarBalao(mensagem, duracao = TEMPO_EXIBICAO) {
+  dom.balaoDeFala.textContent = mensagem;
+  dom.balaoDeFala.classList.add('visible');
+  setTimeout(() => dom.balaoDeFala.classList.remove('visible'), duracao);
+}
+
 function tocarSom(nomeDoEfeito) {
   if (sons[nomeDoEfeito]) {
-    sons[nomeDoEfeito].play().catch((error) => {
-      console.error("Erro ao reproduzir o som:", error);
+    sons[nomeDoEfeito].play().catch(() => {
+      mostrarBalao("Efeito sonoro não disponível!", 3000);
     });
-  } else {
-    console.error("Som não encontrado para o efeito:", nomeDoEfeito);
   }
 }
 
-// Função para calcular probabilidades com base no bônus/penalidade
+function obterBonus() {
+  const valor = dom.bonusInput.value;
+  if (!valor || isNaN(valor)) {
+    mostrarBalao("Por favor, insira um número válido!");
+    return 0;
+  }
+  return Math.max(-5, Math.min(5, parseInt(valor))); // Limita entre -5 e +5
+}
+
+// Lógica do jogo
 function calcularProbabilidades(bonus) {
   let excelente = 1;
   let bons = 20;
@@ -103,29 +123,31 @@ function calcularProbabilidades(bonus) {
   let ruins = 45;
   let pessimo = 4;
 
-  if (bonus > 0) {
-    excelente += bonus * 1;
-    bons += bonus * 2;
-    ruins -= bonus * 3;
-    pessimo -= bonus * 1;
-  } else if (bonus < 0) {
+  if (bonus !== 0) {
     excelente += bonus * 1;
     bons += bonus * 2;
     ruins -= bonus * 3;
     pessimo -= bonus * 1;
   }
 
+  // Garante valores não negativos
   excelente = Math.max(0, excelente);
   bons = Math.max(0, bons);
   ruins = Math.max(0, ruins);
   pessimo = Math.max(0, pessimo);
+  neutros = Math.max(0, 100 - (excelente + bons + ruins + pessimo));
 
-  neutros = 100 - (excelente + bons + ruins + pessimo);
-
-  return [excelente, bons, neutros, ruins, pessimo];
+  // Normaliza para 100%
+  const total = excelente + bons + neutros + ruins + pessimo;
+  return [
+    (excelente / total) * 100,
+    (bons / total) * 100,
+    (neutros / total) * 100,
+    (ruins / total) * 100,
+    (pessimo / total) * 100
+  ];
 }
 
-// Função para gerar um resultado aleatório com base no bônus/penalidade
 function gerarResultado(bonus) {
   const probabilidades = calcularProbabilidades(bonus);
   const sorteio = Math.random() * 100;
@@ -139,102 +161,88 @@ function gerarResultado(bonus) {
       return opcoesFiltradas[Math.floor(Math.random() * opcoesFiltradas.length)];
     }
   }
+  return opcoes[0]; // Fallback (nunca deve ocorrer)
 }
 
-// Função para exibir o resultado no balão de fala
 function exibirResultado(resultado) {
-  if (!resultado) {
-    console.error("Resultado inválido!");
-    return;
-  }
+  mostrarBalao(resultado.mensagem);
 
-  // Exibe o resultado no balão de fala
-  balaoDeFala.textContent = resultado.mensagem;
-  balaoDeFala.classList.add('visible');
-
-  // Altera a imagem do espelho com base no nome do efeito
   const novaImagem = imagensPorEfeito[resultado.nome];
   if (novaImagem) {
-    espelho.src = novaImagem;
-
-    // Verifica se o efeito é "Espelho Quebrado"
+    dom.espelho.src = novaImagem;
     if (resultado.nome === 'Espelho Quebrado') {
-      espelhoQuebrado = true; // Marca o espelho como quebrado
-      tocarSom(resultado.nome); // Reproduz o som correspondente
-    } else {
-      // Para outros efeitos, restaura a imagem após 8 segundos, a menos que o espelho esteja quebrado
+      espelhoQuebrado = true;
+      tocarSom(resultado.nome);
+    } else if (!espelhoQuebrado) {
       setTimeout(() => {
-        if (!espelhoQuebrado) {
-          espelho.src = './img/espelhomagico.png';
-        }
-      }, 8000);
+        dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+      }, TEMPO_EXIBICAO);
     }
   }
 
-  // Adiciona o resultado ao registro
   const novoItem = document.createElement('li');
   novoItem.textContent = resultado.efeito;
-  listaRegistro.prepend(novoItem);
-}
+  dom.listaRegistro.prepend(novoItem);
 
-// Função para limpar o balão de fala após alguns segundos
-function limparBalao() {
-  setTimeout(() => {
-    balaoDeFala.classList.remove('visible');
-  }, 8000);
-}
-
-// Evento de clique na área clicável
-areaClicavel.addEventListener('click', () => {
-  // Verifica se o espelho já está quebrado
-  if (espelhoQuebrado) {
-    return; // Impede novos cliques enquanto o espelho estiver quebrado
+  // Limita registros
+  if (dom.listaRegistro.children.length > LIMITE_REGISTROS) {
+    dom.listaRegistro.removeChild(dom.listaRegistro.lastChild);
   }
+}
 
-  const bonus = parseInt(bonusInput.value); // Obtém o valor do bônus/penalidade
+function alternarTrava() {
+  travaHistorico = !travaHistorico;
+  dom.iconeTrava.title = travaHistorico
+    ? "Clique para desbloquear o histórico (DM Only)"
+    : "Clique para bloquear o histórico";
+  dom.iconeTrava.classList.toggle('travado', travaHistorico);
+}
+
+function ajustarBonus(direcao) {
+  let bonus = obterBonus();
+  if (direcao === 'aumentar' && bonus < 5) {
+    bonus += 1;
+  } else if (direcao === 'diminuir' && bonus > -5) {
+    bonus -= 1;
+  }
+  dom.bonusInput.value = bonus;
+}
+
+// Eventos
+dom.areaClicavel.addEventListener('click', () => {
+  if (espelhoQuebrado) return;
+  const bonus = obterBonus();
   const resultado = gerarResultado(bonus);
-
-  // Exibe o resultado no balão de fala
   exibirResultado(resultado);
-
-  // Limpa o balão de fala após 8 segundos
-  limparBalao();
 });
 
-// Botões para aumentar/diminuir o bônus
-decreaseButton.addEventListener('click', () => {
-  let bonus = parseInt(bonusInput.value);
-  if (bonus > -5) {
-    bonus -= 1; // Diminui o valor do bônus
-    bonusInput.value = bonus; // Atualiza o campo de entrada
-  }
+dom.areaClicavel.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') dom.areaClicavel.click();
 });
 
-increaseButton.addEventListener('click', () => {
-  let bonus = parseInt(bonusInput.value);
-  if (bonus < 5) {
-    bonus += 1; // Aumenta o valor do bônus
-    bonusInput.value = bonus; // Atualiza o campo de entrada
-  }
-});
+dom.decreaseButton.addEventListener('click', () => ajustarBonus('diminuir'));
+dom.increaseButton.addEventListener('click', () => ajustarBonus('aumentar'));
 
-// Evento de clique no botão "Mostrar/Ocultar Histórico"
-toggleHistorico.addEventListener('click', () => {
+dom.iconeTrava.addEventListener('click', alternarTrava);
+
+dom.toggleHistorico.addEventListener('click', () => {
   if (travaHistorico) {
-    // Exibe a mensagem no balão de fala
-    balaoDeFala.textContent = "Hey, você não é o DM, melhor não mexer aí!";
-    balaoDeFala.classList.add('visible');
-    limparBalao(); // Remove a mensagem após alguns segundos
-    return; // Impede que o histórico seja mostrado
+    mostrarBalao("Hey, você é o DM? Então é melhor não mexer aí!");
+    return;
   }
-
-  // Alterna a visibilidade do histórico
-  if (registro.style.display === 'none' || registro.style.display === '') {
-    registro.style.display = 'block';
-    toggleHistorico.textContent = 'Ocultar Histórico';
-  } else {
-    registro.style.display = 'none';
-    toggleHistorico.textContent = 'Mostrar Histórico';
-  }
+  const visivel = dom.registro.style.display !== 'block';
+  dom.registro.style.display = visivel ? 'block' : 'none';
+  dom.toggleHistorico.textContent = visivel ? 'Ocultar Histórico' : 'Mostrar Histórico';
 });
 
+window.addEventListener('load', () => {
+  espelhoQuebrado = localStorage.getItem('espelhoQuebrado') === 'true';
+  travaHistorico = localStorage.getItem('travaHistorico') === 'true';
+  if (espelhoQuebrado) dom.espelho.src = imagensPorEfeito['Espelho Quebrado'];
+  alternarTrava(); // Atualiza título e classe
+});
+
+function salvarEstado() {
+  localStorage.setItem('espelhoQuebrado', espelhoQuebrado);
+  localStorage.setItem('travaHistorico', travaHistorico);
+}
