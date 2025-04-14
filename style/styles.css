@@ -223,21 +223,96 @@ button:active {
   }
 }
 
-#icone-trava {
+/* #icone-trava {
   position: absolute;
   bottom: 10px;
   left: 10px;
-  width: 30px;
-  height: 30px;
-  background-image: url('./img/trava.png'); /* Substitua pelo caminho do ícone */
-  background-size: cover;
+  width: 100px;
+  height: 100px;
+  background: none;
+  border: none;
   cursor: pointer;
-  opacity: 0.3; /* Deixa o ícone discreto */
-  transition: opacity 0.3s ease; /* Animação suave */
-  border: 2px solid red;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+  padding: 0;
 }
 
-/* Efeito ao passar o mouse */
 #icone-trava:hover {
-  opacity: 1; /* Torna o ícone visível */
+  opacity: 1;
+}
+
+#icone-trava img {
+  width: 100%;
+  height: auto;
+  display: block;
+} */
+
+/* Para navegadores baseados no Chrome (Webkit) */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari e Edge */
+}
+
+/* Estilização do botão */
+.botao-dm {
+  position: relative;
+  background: none; /* Remove o fundo padrão do botão */
+  border: none; /* Remove a borda padrão do botão */
+  cursor: pointer; /* Altera o cursor para indicar interatividade */
+  padding: 0; /* Remove o espaçamento interno padrão */
+  width: 100px; /* Largura fixa */
+  height: 100px; /* Altura fixa */
+  overflow: hidden; /* Garante que o conteúdo não transborde */
+}
+
+/* Estilização do SVG */
+.icone-dm {
+  display: block; /* Garante que o SVG seja tratado como um bloco */
+  width: 100%; /* Ocupa todo o espaço disponível no botão */
+  height: 100%; /* Ocupa todo o espaço disponível no botão */
+}
+
+/* Estilização do círculo */
+.icone-dm circle {
+  fill: blue; /* Cor de fundo do círculo */
+}
+
+/* Estilização do texto no SVG */
+.texto-dm {
+  fill: white; /* Cor do texto */
+  font-family: Arial, sans-serif; /* Fonte do texto */
+  font-weight: bold; /* Negrito */
+  letter-spacing: 2px; /* Espaçamento entre letras */
+}
+
+/* Estilização do fallback para navegadores antigos */
+.fallback-dm {
+  display: none; /* Oculta o fallback por padrão */
+}
+
+/* Mostra o fallback apenas em navegadores que não suportam SVG */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .fallback-dm {
+    display: block; /* Exibe o fallback no IE */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white; /* Cor do texto fallback */
+    font-size: 20px; /* Tamanho da fonte */
+    font-family: Arial, sans-serif; /* Fonte */
+    font-weight: bold; /* Negrito */
+  }
+}
+
+.botao-dm:hover .icone-dm circle {
+  fill: darkblue; /* Altera a cor do círculo ao passar o mouse */
+}
+
+.botao-dm:hover .texto-dm {
+  fill: yellow; /* Altera a cor do texto ao passar o mouse */
 }
