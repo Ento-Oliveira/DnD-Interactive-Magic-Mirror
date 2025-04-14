@@ -119,9 +119,9 @@ function obterBonus() {
 function calcularProbabilidades(bonus) {
   let excelente = 1;
   let bons = 20;
-  let neutros = 30;
   let ruins = 45;
   let pessimo = 4;
+  const neutros = 30; // Fixo em 30%
 
   if (bonus !== 0) {
     excelente += bonus * 1;
@@ -135,16 +135,17 @@ function calcularProbabilidades(bonus) {
   bons = Math.max(0, bons);
   ruins = Math.max(0, ruins);
   pessimo = Math.max(0, pessimo);
-  neutros = Math.max(0, 100 - (excelente + bons + ruins + pessimo));
 
-  // Normaliza para 100%
-  const total = excelente + bons + neutros + ruins + pessimo;
+  // Normaliza excelente, bons, ruins e pessimo para 70%
+  const totalVariavel = excelente + bons + ruins + pessimo;
+  const fatorNormalizacao = totalVariavel > 0 ? 70 / totalVariavel : 1;
+
   return [
-    (excelente / total) * 100,
-    (bons / total) * 100,
-    (neutros / total) * 100,
-    (ruins / total) * 100,
-    (pessimo / total) * 100
+    (excelente * fatorNormalizacao) / 100 * 100, // % dentro dos 70%
+    (bons * fatorNormalizacao) / 100 * 100,
+    neutros, // Sempre 30%
+    (ruins * fatorNormalizacao) / 100 * 100,
+    (pessimo * fatorNormalizacao) / 100 * 100
   ];
 }
 
@@ -173,9 +174,12 @@ function exibirResultado(resultado) {
     if (resultado.nome === 'Espelho Quebrado') {
       espelhoQuebrado = true;
       tocarSom(resultado.nome);
+      salvarEstado();
     } else if (!espelhoQuebrado) {
       setTimeout(() => {
-        dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+        if (!espelhoQuebrado) {
+          dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+        }
       }, TEMPO_EXIBICAO);
     }
   }
@@ -196,6 +200,10 @@ function alternarTrava() {
     ? "Clique para desbloquear o histórico (DM Only)"
     : "Clique para bloquear o histórico";
   dom.iconeTrava.classList.toggle('travado', travaHistorico);
+  if (!travaHistorico && !espelhoQuebrado) {
+    dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+  }
+  salvarEstado();
 }
 
 function ajustarBonus(direcao) {
@@ -228,26 +236,42 @@ dom.iconeTrava.addEventListener('click', alternarTrava);
 dom.toggleHistorico.addEventListener('click', () => {
   if (travaHistorico) {
     mostrarBalao("Hey, você é o DM? Então é melhor não mexer aí!");
-    if(!espelhoQuebrado) {
-      dom.espelho.src = imagensPorEfeito['AvisoDM'];
-      setTimeout(() => {
-        if (!espelhoQuebrado) {
-          dom.espelho.src ='${CAMINHO_BASE}img/espelhomagico.png';
-        }
-      }, TEMPO_EXIBICAO);
+    if (!espelhoQuebrado) {
+      const novaImagem = imagensPorEfeito['AvisoDM'];
+      if (novaImagem) {
+        dom.espelho.src = novaImagem;
+        setTimeout(() => {
+          if (!espelhoQuebrado) {
+            dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+          }
+        }, TEMPO_EXIBICAO);
+      } else {
+        console.warn('Imagem AvisoDM não encontrada!');
+      }
     }
     return;
   }
   const visivel = dom.registro.style.display !== 'block';
   dom.registro.style.display = visivel ? 'block' : 'none';
   dom.toggleHistorico.textContent = visivel ? 'Ocultar Histórico' : 'Mostrar Histórico';
+  if (!espelhoQuebrado && dom.espelho.src !== `${CAMINHO_BASE}img/espelhomagico.png`) {
+    dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+  }
 });
 
 window.addEventListener('load', () => {
   espelhoQuebrado = localStorage.getItem('espelhoQuebrado') === 'true';
-  travaHistorico = localStorage.getItem('travaHistorico') === 'true';
-  if (espelhoQuebrado) dom.espelho.src = imagensPorEfeito['Espelho Quebrado'];
-  alternarTrava(); // Atualiza título e classe
+  travaHistorico = true; // Força histórico travado
+  localStorage.setItem('travaHistorico', travaHistorico); // Atualiza localStorage
+  if (espelhoQuebrado) {
+    dom.espelho.src = imagensPorEfeito['Espelho Quebrado'];
+  } else {
+    dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+  }
+  dom.iconeTrava.title = travaHistorico
+    ? "Clique para desbloquear o histórico (DM Only)"
+    : "Clique para bloquear o histórico";
+  dom.iconeTrava.classList.toggle('travado', travaHistorico);
 });
 
 function salvarEstado() {
