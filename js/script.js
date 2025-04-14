@@ -49,12 +49,12 @@ const opcoes = [
   { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Tu és parte do grande tecido do cosmos. Sente sua força correr em tuas veias.', efeito: 'Concede ao jogador uma bênção (ex.: vantagem em testes, resistência a um tipo de dano, um ataque adicional por rodada) até o próximo descanso longo.' },
   { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'Um lampejo do futuro... ou talvez do passado. Decifra seu significado.', efeito: 'Concede uma informação importante sobre o vilão, um segredo oculto ou aventura.' },
   { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'Não compreendo... mas talvez tu consigas. Escuta estas palavras.', efeito: 'Concede um enigma ou mensagem críptica que pode desencadear uma side quest ou avançar trama.' },
-  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O que está escondido espera por ti... mas o preço pode ser alto.', efeito: 'Abre uma passagem para o mundo do espelho, onde os jogadores podem buscar um tesouro ou segredo valioso. No entanto, cada vez que o poder é usado, a prisão do ser aprisionado é enfraquecida, aproximando-o de sua liberdade (-1 de Penalidade).' },
-  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'O que vês pode ser verdade... ou apenas sombras.', efeito: 'Prende o jogador em uma ilusão com pista ou efeitos.' },
-  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Teu destino arde em chamas... e eu sou a centelha.', efeito: 'Teste de Sabedoria (CD 15) ou hipnose por 1d4 rodadas.' },
-  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Tua energia alimenta minha prisão...', efeito: 'Teste de Constituição (CD 15) ou dano e penalidade.' },
-  { nome: 'Olhar Vazio', tipo: 'ruim', mensagem: 'No vazio, tu és nada... e eu sou tudo.', efeito: 'Teste de Sabedoria (CD 15) ou maldição até descanso.' },
-  { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'Olhem para mim agora... e vejam o que libertaram.', efeito: 'Libera o ser maligno, causando caos.' }
+  { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O que está escondido espera por ti... mas o preço pode ser alto do que imaginas.', efeito: 'Abre uma passagem para o mundo do espelho, onde os jogadores podem buscar um tesouro ou segredo valioso. No entanto, cada vez que o poder é usado, a prisão do ser aprisionado é enfraquecida, aproximando-o de sua liberdade (-1 de Penalidade).' },
+  { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'O que vês pode ser verdade... ou apenas sombras do que poderia ser.', efeito: 'Prende o jogador em uma ilusão por 1d4 rodadas com pistas ou efeitos.' },
+  { nome: 'Olho Flamejante', tipo: 'ruim', mensagem: 'Teu destino arde em chamas... e eu sou a centelha.', efeito: 'O jogador deve fazer um salvaguarda de Sabedoria (CD 15) ou será hipnose por 1d4 rodadas.' },
+  { nome: 'Coração Pulsante', tipo: 'ruim', mensagem: 'Tua energia alimenta minha prisão... mas também me fortalece.', efeito: 'O jogador deve fazer um salvaguarda de Constituição (CD 15). Se passar, sofre 1d6 de dano necrótico. Se falhar, sofre 1d6 de dano necrótico e tem 1 ponto de um atributo reduzido até o próximo descanso longo.' },
+  { nome: 'Olhar Vazio', tipo: 'ruim', mensagem: 'No vazio, tu és nada... e eu sou tudo.', efeito: 'Todos os jogadores devem fazer um salvaguarda de Sabedoria (CD 15). Se falharem, sofrem uma maldição que impõe desvantagem em todos os ataques e testes de habilidade até o próximo descanso longo.' },
+  { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'Olhem para mim agora... e vejam o que libertaram.', efeito: 'Libera o ser maligno aprisionado. Ele se liga à sombra de um jogador (geralmente, quem o libertou) e começa a perturbar todos os jogadores com eventos assustadores, até see descoberto como uma entidade ligada à sombra do jogador. Após ser descoberto, ele começa a sussurrar diretamente no ouvido do portador, manipulando sua mente e causando caos. Até ser removido ou se fortalecer para assumir uma forma física e confrontar os jogadores.' }
 ];
 
 // Mapeamento de mídia
@@ -68,7 +68,8 @@ const imagensPorEfeito = {
   'Olho Flamejante': `${CAMINHO_BASE}img/espelhohipnose.jpg`,
   'Coração Pulsante': `${CAMINHO_BASE}img/espelhovitae.jpg`,
   'Olhar Vazio': `${CAMINHO_BASE}img/espelhovazio.jpg`,
-  'Espelho Quebrado': `${CAMINHO_BASE}img/espelhoquebrado.jpg`
+  'Espelho Quebrado': `${CAMINHO_BASE}img/espelhoquebrado.jpg`,
+  'AvisoDM': `${CAMINHO_BASE}img/espelhoaviso.jpg`
 };
 
 const listaDeSons = {
@@ -109,7 +110,6 @@ function tocarSom(nomeDoEfeito) {
 function obterBonus() {
   const valor = dom.bonusInput.value;
   if (!valor || isNaN(valor)) {
-    mostrarBalao("Por favor, insira um número válido!");
     return 0;
   }
   return Math.max(-5, Math.min(5, parseInt(valor))); // Limita entre -5 e +5
@@ -228,6 +228,14 @@ dom.iconeTrava.addEventListener('click', alternarTrava);
 dom.toggleHistorico.addEventListener('click', () => {
   if (travaHistorico) {
     mostrarBalao("Hey, você é o DM? Então é melhor não mexer aí!");
+    if(!espelhoQuebrado) {
+      dom.espelho.src = imagensPorEfeito['AvisoDM'];
+      setTimeout(() => {
+        if (!espelhoQuebrado) {
+          dom.espelho.src ='${CAMINHO_BASE}img/espelhomagico.png';
+        }
+      }, TEMPO_EXIBICAO);
+    }
     return;
   }
   const visivel = dom.registro.style.display !== 'block';
