@@ -47,7 +47,7 @@ if (!inicializarElementos()) {
 const opcoes = [
   { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'Olha para mim e vê quem tu és verdadeiramente. Agora, carrega essa verdade contigo.', efeito: 'Concede ao jogador +1 ponto permanente em um atributo à escolha.' },
   { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Tu és parte do grande tecido do cosmos. Sente sua força correr em tuas veias.', efeito: 'Concede ao jogador uma bênção (ex.: vantagem em testes, resistência a um tipo de dano, um ataque adicional por rodada) até o próximo descanso longo.' },
-  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'Um lampejo do futuro... ou talvez do passado. Decifra seu significado.', efeito: 'Concede uma informação importante sobre o vilão, um segredo oculto ou aventura.' },
+  { nome: 'Sorriso Enigmático', tipo: 'bom', mensagem: 'Um lampejo do futuro... ou talvez do passadocrate. Decifra seu significado.', efeito: 'Concede uma informação importante sobre o vilão, um segredo oculto ou aventura.' },
   { nome: 'Olhar Confuso', tipo: 'neutro', mensagem: 'Não compreendo... mas talvez tu consigas. Escuta estas palavras.', efeito: 'Concede um enigma ou mensagem críptica que pode desencadear uma side quest ou avançar trama.' },
   { nome: 'Sorriso Tímido', tipo: 'neutro', mensagem: 'O que está escondido espera por ti... mas o preço pode ser alto do que imaginas.', efeito: 'Abre uma passagem para o mundo do espelho, onde os jogadores podem buscar um tesouro ou segredo valioso. No entanto, cada vez que o poder é usado, a prisão do ser aprisionado é enfraquecida, aproximando-o de sua liberdade (-1 de Penalidade).' },
   { nome: 'Olhar Distante', tipo: 'neutro', mensagem: 'O que vês pode ser verdade... ou apenas sombras do que poderia ser.', efeito: 'Prende o jogador em uma ilusão por 1d4 rodadas com pistas ou efeitos.' },
@@ -74,14 +74,14 @@ const imagensPorEfeito = {
 
 const listaDeSons = {
   'Rosto Radiante': `${CAMINHO_BASE}sons/radiant.mp3`,
-  'Olhar Estrelado': `${CAMINHO_BASE}audio/olhar_estrelado.mp3`,
-  'Sorriso Enigmático': `${CAMINHO_BASE}audio/sorriso_enigmatico.mp3`,
-  'Olhar Confuso': `${CAMINHO_BASE}audio/olhar_confuso.mp3`,
-  'Sorriso Tímido': `${CAMINHO_BASE}audio/sorriso_timido.mp3`,
-  'Olhar Distante': `${CAMINHO_BASE}audio/olhar_distante.mp3`,
-  'Olho Flamejante': `${CAMINHO_BASE}audio/olho_flamejante.mp3`,
-  'Coração Pulsante': `${CAMINHO_BASE}audio/coracao_pulsante.mp3`,
-  'Olhar Vazio': `${CAMINHO_BASE}audio/olhar_vazio.mp3`,
+  'Olhar Estrelado': `${CAMINHO_BASE}sons/olhar_estrelado.mp3`,
+  'Sorriso Enigmático': `${CAMINHO_BASE}sons/sorriso_enigmatico.mp3`,
+  'Olhar Confuso': `${CAMINHO_BASE}sons/olhar_confuso.mp3`,
+  'Sorriso Tímido': `${CAMINHO_BASE}sons/sorriso_timido.mp3`,
+  'Olhar Distante': `${CAMINHO_BASE}sons/olhar_distante.mp3`,
+  'Olho Flamejante': `${CAMINHO_BASE}sons/olho_flamejante.mp3`,
+  'Coração Pulsante': `${CAMINHO_BASE}sons/coracao_pulsante.mp3`,
+  'Olhar Vazio': `${CAMINHO_BASE}sons/olhar_vazio.mp3`,
   'Espelho Quebrado': `${CAMINHO_BASE}sons/broken.mp3`
 };
 
@@ -182,6 +182,8 @@ function exibirResultado(resultado) {
         }
       }, TEMPO_EXIBICAO);
     }
+  } else {
+    console.warn(`Imagem para '${resultado.nome}' não encontrada!`);
   }
 
   const novoItem = document.createElement('li');
@@ -260,18 +262,15 @@ dom.toggleHistorico.addEventListener('click', () => {
 });
 
 window.addEventListener('load', () => {
-  espelhoQuebrado = localStorage.getItem('espelhoQuebrado') === 'true';
+  console.log('Carregando página...');
+  espelhoQuebrado = false; // Força espelho não quebrado
   travaHistorico = true; // Força histórico travado
-  localStorage.setItem('travaHistorico', travaHistorico); // Atualiza localStorage
-  if (espelhoQuebrado) {
-    dom.espelho.src = imagensPorEfeito['Espelho Quebrado'];
-  } else {
-    dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
-  }
-  dom.iconeTrava.title = travaHistorico
-    ? "Clique para desbloquear o histórico (DM Only)"
-    : "Clique para bloquear o histórico";
-  dom.iconeTrava.classList.toggle('travado', travaHistorico);
+  localStorage.setItem('espelhoQuebrado', espelhoQuebrado);
+  localStorage.setItem('travaHistorico', travaHistorico);
+  dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+  dom.iconeTrava.title = "Clique para desbloquear o histórico (DM Only)";
+  dom.iconeTrava.classList.add('travado');
+  console.log('Estado inicial:', { espelhoQuebrado, travaHistorico });
 });
 
 function salvarEstado() {
