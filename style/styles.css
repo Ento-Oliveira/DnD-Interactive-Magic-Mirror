@@ -1,3 +1,12 @@
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   margin: 0;
   background-color: #1a1a1a;
@@ -196,38 +205,28 @@ button:active {
   color: #ccc;
 }
 
-  #icone-trava {
-    position: absolute;
-    bottom: 100px;
-    left: 10px;
-    width: 50px;
-    height: 50px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    opacity: 0.3;
-    transition: opacity 0.3s ease;
-    padding: 0;
-    border: 2px solid rgb(97, 6, 97);
-  }
-
-  #icone-trava:hover {
-    background-color: purple;
-    opacity: 1;
-  }
-
-  #icone-trava:active {
-    transform: scale(0.95);
-  }
-
-/* Para navegadores baseados no Chrome (Webkit) */
-html {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer */
+#icone-trava {
+  position: absolute;
+  bottom: 100px;
+  left: 10px;
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+  padding: 0;
+  border: 2px solid rgb(97, 6, 97);
 }
 
-html::-webkit-scrollbar {
-  display: none; /* Chrome, Safari e Edge */
+#icone-trava:hover {
+  background-color: purple;
+  opacity: 1;
+}
+
+#icone-trava:active {
+  transform: scale(0.95);
 }
 
 #icone-trava.travado::before {
