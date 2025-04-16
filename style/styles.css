@@ -213,19 +213,14 @@ button:active {
   align-items: center;
   padding: 12px 24px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   background: #1a1a1a;
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-
   bottom: 100px;
   left: 10px;
-  /* width: 50px;
-  height: 50px;
-  opacity: 0.3;
-  padding: 0; */
 }
 
 #icone-trava span {
@@ -237,15 +232,12 @@ button:active {
   position: relative;
   z-index: 1;
   line-height: 1;
-    position: static;
+  position: static;
 }
 
 #icone-trava:hover {
   box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(255, 69, 0, 0.4);
   transform: scale(1.05);
-
-  /* background-color: purple;
-  opacity: 1; */
 }
 
 #icone-trava::before {
@@ -275,16 +267,12 @@ button:active {
   transform: scale(0.95);
 }
 
-/* #icone-trava:active {
-  transform: scale(0.95);
-}
-
 #icone-trava.travado::before {
   content: '🔒';
 }
 #icone-trava:not(.travado)::before {
   content: '🔓';
-} */
+}
 
 @media (max-width: 768px) {
   #espelho-container {
