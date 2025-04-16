@@ -11,7 +11,7 @@ body {
   margin: 0;
   background-color: #1a1a1a;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: 'UnifrakturMaguntia', Georgia, sans-serif;
 }
 
 #container {
@@ -150,7 +150,8 @@ button:active {
   width: 300px;
 }
 
-#toggle-historico {
+#toggle-historico {  
+  font-family: 'UnifrakturMaguntia', Georgia, sans-serif;
   width: 100%;
   padding: 10px;
   background: #333;
@@ -207,7 +208,9 @@ button:active {
 
 #icone-trava {
   position: absolute;
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 12px 24px;
   border: none;
   border-radius: 5px;
@@ -231,13 +234,15 @@ button:active {
 }
 
 #icone-trava span {
-  font-family: 'Luminari', 'Georgia', serif;
+  font-family: 'UnifrakturMaguntia', Georgia, sans-serif;
   font-size: 18px;
   color: #00ffff;
   text-transform: uppercase;
   letter-spacing: 2px;
   position: relative;
   z-index: 1;
+  line-height: 1;
+    position: static;
 }
 
 #icone-trava:hover {
