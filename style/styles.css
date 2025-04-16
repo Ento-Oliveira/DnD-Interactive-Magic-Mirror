@@ -207,9 +207,19 @@ button:active {
 
 #icone-trava {
   position: absolute;
+  display: inline-block;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  background: #1a1a1a;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
   bottom: 100px;
   left: 10px;
-  width: 50px;
+  /* width: 50px;
   height: 50px;
   background: none;
   border: none;
@@ -217,24 +227,64 @@ button:active {
   opacity: 0.3;
   transition: opacity 0.3s ease;
   padding: 0;
-  border: 2px solid rgb(97, 6, 97);
+  border: 2px solid rgb(97, 6, 97); */
+}
+
+#icone-trava span {
+  font-family: 'Luminari', 'Georgia', serif;
+  font-size: 18px;
+  color: #00ffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 1;
 }
 
 #icone-trava:hover {
-  background-color: purple;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 30px rgba(255, 69, 0, 0.4);
+  transform: scale(1.05);
+
+  /* background-color: purple;
+  opacity: 1; */
+}
+
+#icone-trava::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 69, 0, 0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#icone-trava:hover::before {
   opacity: 1;
+  animation: flicker 1.5s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }  
 }
 
 #icone-trava:active {
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+  transform: scale(0.95);
+}
+
+/* #icone-trava:active {
   transform: scale(0.95);
 }
 
 #icone-trava.travado::before {
-  content: '🔒'; /* Ícone de cadeado fechado */
+  content: '🔒';
 }
 #icone-trava:not(.travado)::before {
-  content: '🔓'; /* Ícone de cadeado aberto */
-}
+  content: '🔓';
+} */
 
 @media (max-width: 768px) {
   #espelho-container {
