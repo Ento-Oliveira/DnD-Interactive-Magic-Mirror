@@ -11,7 +11,7 @@ body {
   margin: 0;
   background-color: #1a1a1a;
   color: white;
-  font-family: 'UnifrakturMaguntia', Georgia, sans-serif;
+  font-family: 'Cinzel', Georgia, sans-serif;
 }
 
 #container {
@@ -151,7 +151,7 @@ button:active {
 }
 
 #toggle-historico {  
-  font-family: 'UnifrakturMaguntia', Georgia, sans-serif;
+  font-family: 'Cinzel', Georgia, sans-serif;
   width: 100%;
   padding: 10px;
   background: #333;
@@ -224,7 +224,7 @@ button:active {
 }
 
 #icone-trava span {
-  font-family: 'UnifrakturMaguntia', Georgia, sans-serif;
+  font-family: 'Cinzel', Georgia, sans-serif;
   font-size: 18px;
   color: #00ffff;
   text-transform: uppercase;
