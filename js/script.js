@@ -74,14 +74,6 @@ const imagensPorEfeito = {
 
 const listaDeSons = {
   'Rosto Radiante': `${CAMINHO_BASE}sons/radiant.mp3`,
-  'Olhar Estrelado': `${CAMINHO_BASE}sons/olhar_estrelado.mp3`,
-  'Sorriso Enigmático': `${CAMINHO_BASE}sons/sorriso_enigmatico.mp3`,
-  'Olhar Confuso': `${CAMINHO_BASE}sons/olhar_confuso.mp3`,
-  'Sorriso Tímido': `${CAMINHO_BASE}sons/sorriso_timido.mp3`,
-  'Olhar Distante': `${CAMINHO_BASE}sons/olhar_distante.mp3`,
-  'Olho Flamejante': `${CAMINHO_BASE}sons/olho_flamejante.mp3`,
-  'Coração Pulsante': `${CAMINHO_BASE}sons/coracao_pulsante.mp3`,
-  'Olhar Vazio': `${CAMINHO_BASE}sons/olhar_vazio.mp3`,
   'Espelho Quebrado': `${CAMINHO_BASE}sons/broken.mp3`
 };
 
