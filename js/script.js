@@ -83,7 +83,6 @@ for (const nomeDoEfeito in listaDeSons) {
   sons[nomeDoEfeito].preload = 'auto';
 }
 
-// Funções utilitárias
 function mostrarBalao(mensagem, duracao = TEMPO_EXIBICAO) {
   dom.balaoDeFala.textContent = mensagem;
   dom.balaoDeFala.classList.add('visible');
@@ -106,13 +105,12 @@ function obterBonus() {
   return Math.max(-5, Math.min(5, parseInt(valor))); // Limita entre -5 e +5
 }
 
-// Lógica do jogo
 function calcularProbabilidades(bonus) {
   let excelente = 1;
   let bons = 20;
   let ruins = 45;
   let pessimo = 4;
-  const neutros = 30; // Fixo em 30%
+  const neutros = 30;
 
   if (bonus !== 0) {
     excelente += bonus * 1;
