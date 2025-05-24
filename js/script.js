@@ -1,13 +1,10 @@
-// Constantes
 const TEMPO_EXIBICAO = 8000;
-const CAMINHO_BASE = './'; // Ajuste se necessário (ex.: '/recursos/')
+const CAMINHO_BASE = './';
 const LIMITE_REGISTROS = 50;
 
-// Estado do jogo
 let espelhoQuebrado = false;
 let travaHistorico = true;
 
-// Elementos DOM (com validação)
 const elementos = {
   areaClicavel: 'area-clicavel',
   balaoDeFala: 'balao-de-fala',
@@ -30,7 +27,7 @@ function inicializarElementos() {
       return false;
     }
   }
-  // Configurações iniciais
+  
   dom.registro.style.display = 'none';
   dom.toggleHistorico.textContent = 'Mostrar Histórico';
   dom.balaoDeFala.setAttribute('role', 'alert');
@@ -43,7 +40,6 @@ if (!inicializarElementos()) {
   throw new Error("Inicialização falhou");
 }
 
-// Lista de opções do espelho
 const opcoes = [
   { nome: 'Rosto Radiante', tipo: 'excelente', mensagem: 'Olha para mim e vê quem tu és verdadeiramente. Agora, carrega essa verdade contigo.', efeito: 'Concede ao jogador +1 ponto permanente em um atributo à escolha.' },
   { nome: 'Olhar Estrelado', tipo: 'bom', mensagem: 'Tu és parte do grande tecido do cosmos. Sente sua força correr em tuas veias.', efeito: 'Concede ao jogador uma bênção (ex.: vantagem em testes, resistência a um tipo de dano, um ataque adicional por rodada) até o próximo descanso longo.' },
@@ -57,7 +53,6 @@ const opcoes = [
   { nome: 'Espelho Quebrado', tipo: 'pessimo', mensagem: 'Olhem para mim agora... e vejam o que libertaram.', efeito: 'Libera o ser maligno aprisionado. Ele se liga à sombra de um jogador (geralmente, quem o libertou) e começa a perturbar todos os jogadores com eventos assustadores, até see descoberto como uma entidade ligada à sombra do jogador. Após ser descoberto, ele começa a sussurrar diretamente no ouvido do portador, manipulando sua mente e causando caos. Até ser removido ou se fortalecer para assumir uma forma física e confrontar os jogadores.' }
 ];
 
-// Mapeamento de mídia
 const imagensPorEfeito = {
   'Rosto Radiante': `${CAMINHO_BASE}img/espelhoradiante.jpg`,
   'Olhar Estrelado': `${CAMINHO_BASE}img/espelhowink.jpg`,
@@ -170,7 +165,7 @@ if (novaImagem) {
 
       setTimeout(() => {
         container.classList.remove("tremer");
-      }, 10000); // Duração da animação
+      }, 10000);
     }
 
   } else if (!espelhoQuebrado) {
@@ -215,7 +210,6 @@ function ajustarBonus(direcao) {
   dom.bonusInput.value = bonus;
 }
 
-// Eventos
 dom.areaClicavel.addEventListener('click', () => {
   if (espelhoQuebrado) return;
   const bonus = obterBonus();
