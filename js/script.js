@@ -119,20 +119,18 @@ function calcularProbabilidades(bonus) {
     pessimo -= bonus * 1;
   }
 
-  // Garante valores não negativos
   excelente = Math.max(0, excelente);
   bons = Math.max(0, bons);
   ruins = Math.max(0, ruins);
   pessimo = Math.max(0, pessimo);
-
-  // Normaliza excelente, bons, ruins e pessimo para 70%
+  
   const totalVariavel = excelente + bons + ruins + pessimo;
   const fatorNormalizacao = totalVariavel > 0 ? 70 / totalVariavel : 1;
 
   return [
-    (excelente * fatorNormalizacao) / 100 * 100, // % dentro dos 70%
+    (excelente * fatorNormalizacao) / 100 * 100,
     (bons * fatorNormalizacao) / 100 * 100,
-    neutros, // Sempre 30%
+    neutros,
     (ruins * fatorNormalizacao) / 100 * 100,
     (pessimo * fatorNormalizacao) / 100 * 100
   ];
