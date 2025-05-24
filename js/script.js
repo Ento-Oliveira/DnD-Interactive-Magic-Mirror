@@ -154,35 +154,45 @@ function gerarResultado(bonus) {
       return opcoesFiltradas[Math.floor(Math.random() * opcoesFiltradas.length)];
     }
   }
-  return opcoes[0]; // Fallback (nunca deve ocorrer)
+  return opcoes[0];
 }
 
 function exibirResultado(resultado) {
   mostrarBalao(resultado.mensagem);
 
   const novaImagem = imagensPorEfeito[resultado.nome];
-  if (novaImagem) {
-    dom.espelho.src = novaImagem;
-    if (resultado.nome === 'Espelho Quebrado') {
-      espelhoQuebrado = true;
-      tocarSom(resultado.nome);
-      salvarEstado();
-    } else if (!espelhoQuebrado) {
+if (novaImagem) {
+  dom.espelho.src = novaImagem;
+
+  if (resultado.nome === 'Espelho Quebrado') {
+    espelhoQuebrado = true;
+    tocarSom(resultado.nome);
+    salvarEstado();
+
+    const container = document.getElementById("container");
+    if (container) {
+      container.classList.add("tremer");
+
       setTimeout(() => {
-        if (!espelhoQuebrado) {
-          dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
-        }
-      }, TEMPO_EXIBICAO);
+        container.classList.remove("tremer");
+      }, 500); // Duração da animação
     }
-  } else {
-    console.warn(`Imagem para '${resultado.nome}' não encontrada!`);
+
+  } else if (!espelhoQuebrado) {
+    setTimeout(() => {
+      if (!espelhoQuebrado) {
+        dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
+      }
+    }, TEMPO_EXIBICAO);
   }
+} else {
+  console.warn(`Imagem para '${resultado.nome}' não encontrada!`);
+}
 
   const novoItem = document.createElement('li');
   novoItem.textContent = resultado.efeito;
   dom.listaRegistro.prepend(novoItem);
-
-  // Limita registros
+  
   if (dom.listaRegistro.children.length > LIMITE_REGISTROS) {
     dom.listaRegistro.removeChild(dom.listaRegistro.lastChild);
   }
@@ -255,8 +265,8 @@ dom.toggleHistorico.addEventListener('click', () => {
 
 window.addEventListener('load', () => {
   console.log('Carregando página...');
-  espelhoQuebrado = false; // Força espelho não quebrado
-  travaHistorico = true; // Força histórico travado
+  espelhoQuebrado = false;
+  travaHistorico = true;
   localStorage.setItem('espelhoQuebrado', espelhoQuebrado);
   localStorage.setItem('travaHistorico', travaHistorico);
   dom.espelho.src = `${CAMINHO_BASE}img/espelhomagico.png`;
