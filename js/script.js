@@ -102,7 +102,7 @@ function obterBonus() {
   if (!valor || isNaN(valor)) {
     return 0;
   }
-  return Math.max(-5, Math.min(5, parseInt(valor))); // Limita entre -5 e +5
+  return Math.max(-5, Math.min(5, parseInt(valor)));
 }
 
 function calcularProbabilidades(bonus) {
