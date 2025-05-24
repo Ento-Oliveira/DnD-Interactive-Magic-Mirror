@@ -77,7 +77,6 @@ const listaDeSons = {
   'Espelho Quebrado': `${CAMINHO_BASE}sons/broken.mp3`
 };
 
-// Pré-carrega sons
 const sons = {};
 for (const nomeDoEfeito in listaDeSons) {
   sons[nomeDoEfeito] = new Audio(listaDeSons[nomeDoEfeito]);
