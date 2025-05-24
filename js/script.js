@@ -170,7 +170,7 @@ if (novaImagem) {
 
       setTimeout(() => {
         container.classList.remove("tremer");
-      }, 500); // Duração da animação
+      }, 10000); // Duração da animação
     }
 
   } else if (!espelhoQuebrado) {
